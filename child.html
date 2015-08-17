@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Child</title>
+</head>
+<body>
+Child
+<script>
+    window.postMessage("hello there!", "http://localhost:8000");
+    function receiveMessage(event) {
+        console.log("child", event);
+    }
+    window.addEventListener("message", receiveMessage, false);
+</script>
+</body>
+</html>

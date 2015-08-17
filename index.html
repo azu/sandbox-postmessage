@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Parent</title>
+</head>
+<body>
+<iframe src="http://localhost:8001/child.html"></iframe>
+<script>
+    var childOrigin = "http://localhost:8001";
+    function responseToChild(message) {
+        window.postMessage(message, childOrigin);
+    }
+    function getCredential(){
+        return new Promise(function (resolve, reject) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "./credentials.json");
+            xhr.onload = function () {
+                resolve(xhr.responseText);
+            };
+            xhr.onerror = function () {
+                reject(new Error(xhr.statusText));
+            };
+            xhr.send();
+        });
+    }
+    function receiveMessage(event) {
+        console.log(event.origin);
+        if (event.origin !== childOrigin) {
+            return;
+        }
+        getCredential().then(function (credential) {
+            responseToChild(credential);
+        });
+    }
+    window.addEventListener("message", receiveMessage, false);
+</script>
+</body>
+</html>
