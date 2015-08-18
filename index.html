@@ -5,11 +5,19 @@
     <title>Parent</title>
 </head>
 <body>
-<iframe src="http://localhost:8001/child.html"></iframe>
+<ol>
+    <li>ChildからpostMessageで"データが欲しい"と通知される</li>
+    <li>ParentはChildから来たメッセージなのを確認する</li>
+    <li>Parentがcredentials.jsonを取得する</li>
+    <li>Parentは取得したcredentials.jsonの中身をChildへpostMessageで通知する</li>
+    <li>Childはきたメッセージのデータを確認して欲しかったものをかを見る</li>
+</ol>
+<iframe id="child" src="http://localhost:8001/child.html"></iframe>
 <script>
+    var childWindow = document.getElementById("child").contentWindow;
     var childOrigin = "http://localhost:8001";
     function responseToChild(message) {
-        window.postMessage(message, childOrigin);
+        childWindow.postMessage(message, childOrigin);
     }
     function getCredential(){
         return new Promise(function (resolve, reject) {

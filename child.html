@@ -7,7 +7,7 @@
 <body>
 Child
 <script>
-    window.postMessage("hello there!", "http://localhost:8000");
+    window.parent.postMessage("hello there!", "http://localhost:8000");
     function receiveMessage(event) {
         console.log("child", event);
     }
