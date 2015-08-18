@@ -19,7 +19,7 @@
     function responseToChild(message) {
         childWindow.postMessage(message, childOrigin);
     }
-    function getCredential(){
+    function getCredential() {
         return new Promise(function (resolve, reject) {
             var xhr = new XMLHttpRequest();
             xhr.open("GET", "./credentials.json");
@@ -33,10 +33,10 @@
         });
     }
     function receiveMessage(event) {
-        console.log(event.origin);
         if (event.origin !== childOrigin) {
             return;
         }
+        console.log("Parent: ", event.data , event.origin);
         getCredential().then(function (credential) {
             responseToChild(credential);
         });

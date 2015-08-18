@@ -7,11 +7,14 @@
 <body>
 Child
 <script>
-    window.parent.postMessage("hello there!", "http://localhost:8000");
     function receiveMessage(event) {
         console.log("child", event);
     }
     window.addEventListener("message", receiveMessage, false);
+
+    console.log("Child:", "want to data!!!")
+    window.parent.postMessage("hello there! from Child", "http://localhost:8000");
+
 </script>
 </body>
 </html>
